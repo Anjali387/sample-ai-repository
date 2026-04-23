@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
@@ -28,11 +29,11 @@ class Conversation(db.Model):
 class Message(db.Model):
     __tablename__='messages'
 
-    id = db.Column(db.String(50),primary_key=True)
+    id = db.Column(db.String(50),primary_key=True,default=lambda:str(uuid.uuid4()))
     conversation_id = db.Column(db.String(50),db.ForeignKey('conversations.id'),nullable=False,index=True)
     role=db.Column(db.String(50),nullable=False) # 'user' or 'assistant'
     content = db.Column(db.Text,nullable=False)
-    model = db.Column(db.String(50),nullable=False) #AI Model
+    model = db.Column(db.String(50),nullable=True) #AI Model
     timestamp = db.Column(db.DateTime,default=datetime.utcnow,index=True)
 
     def __repr__(self):

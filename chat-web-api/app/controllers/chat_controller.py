@@ -60,7 +60,7 @@ def send_message():
             }), 400
 
         user_message = data['message'].strip()
-        conversation_id = data.get['conversation_id']
+        conversation_id = data.get('conversation_id')
 
         if conversation_id:
             conversation = Conversation.query.get(conversation_id)
@@ -195,8 +195,8 @@ def get_conversation(conversation_id):
                 'title':conversation.title,
                 'messages':[msg.to_dict() for msg in messages],
                 'total_messages':len(messages),
-                'created_at':conversation.created_at.isoformat(),
-                'updated_at':conversation.updated_at.iosformat()
+                'created_at':conversation.created_at,
+                'updated_at':conversation.updated_at
             }
         }), 200
     except Exception as e:
