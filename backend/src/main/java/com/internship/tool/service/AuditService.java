@@ -1,5 +1,6 @@
 package com.internship.tool.service;
 
+import com.internship.tool.dto.AuditDTO;
 import com.internship.tool.entity.Audit;
 import com.internship.tool.exception.CustomException;
 import com.internship.tool.repository.AuditRepository;
@@ -16,12 +17,17 @@ public class AuditService {
     private AuditRepository auditRepository;
 
     // CREATE AUDIT
-    public Audit createAudit(Audit audit) {
+    public Audit createAudit(AuditDTO auditDTO) {
 
-        // Validation
-        if (audit.getName() == null || audit.getName().isEmpty()) {
+        if (auditDTO.getName() == null || auditDTO.getName().isEmpty()) {
             throw new CustomException("Audit name cannot be empty");
         }
+
+        Audit audit = new Audit();
+
+        audit.setName(auditDTO.getName());
+        audit.setDescription(auditDTO.getDescription());
+        audit.setStatus(auditDTO.getStatus());
 
         audit.setCreatedAt(LocalDateTime.now());
         audit.setUpdatedAt(LocalDateTime.now());
@@ -39,6 +45,20 @@ public class AuditService {
 
         return auditRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Audit not found"));
+    }
+
+    // UPDATE AUDIT
+    public Audit updateAudit(Long id, AuditDTO auditDTO) {
+
+        Audit audit = getAuditById(id);
+
+        audit.setName(auditDTO.getName());
+        audit.setDescription(auditDTO.getDescription());
+        audit.setStatus(auditDTO.getStatus());
+
+        audit.setUpdatedAt(LocalDateTime.now());
+
+        return auditRepository.save(audit);
     }
 
     // DELETE AUDIT
