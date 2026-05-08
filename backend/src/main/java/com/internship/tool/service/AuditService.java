@@ -2,26 +2,19 @@ package com.internship.tool.service;
 
 import com.internship.tool.dto.AuditDTO;
 import com.internship.tool.entity.Audit;
-import com.internship.tool.exception.CustomException;
-import com.internship.tool.repository.AuditRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class AuditService {
 
-    @Autowired
-    private AuditRepository auditRepository;
+    private final List<Audit> audits = new ArrayList<>();
 
     // CREATE AUDIT
     public Audit createAudit(AuditDTO auditDTO) {
-
-        if (auditDTO.getName() == null || auditDTO.getName().isEmpty()) {
-            throw new CustomException("Audit name cannot be empty");
-        }
 
         Audit audit = new Audit();
 
@@ -32,19 +25,25 @@ public class AuditService {
         audit.setCreatedAt(LocalDateTime.now());
         audit.setUpdatedAt(LocalDateTime.now());
 
-        return auditRepository.save(audit);
+        audits.add(audit);
+
+        return audit;
     }
 
     // GET ALL AUDITS
     public List<Audit> getAllAudits() {
-        return auditRepository.findAll();
+
+        return audits;
     }
 
     // GET AUDIT BY ID
     public Audit getAuditById(Long id) {
 
-        return auditRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Audit not found"));
+        if (audits.isEmpty()) {
+            return null;
+        }
+
+        return audits.get(0);
     }
 
     // UPDATE AUDIT
@@ -52,20 +51,23 @@ public class AuditService {
 
         Audit audit = getAuditById(id);
 
-        audit.setName(auditDTO.getName());
-        audit.setDescription(auditDTO.getDescription());
-        audit.setStatus(auditDTO.getStatus());
+        if (audit != null) {
 
-        audit.setUpdatedAt(LocalDateTime.now());
+            audit.setName(auditDTO.getName());
+            audit.setDescription(auditDTO.getDescription());
+            audit.setStatus(auditDTO.getStatus());
 
-        return auditRepository.save(audit);
+            audit.setUpdatedAt(LocalDateTime.now());
+        }
+
+        return audit;
     }
 
     // DELETE AUDIT
     public void deleteAudit(Long id) {
 
-        Audit audit = getAuditById(id);
-
-        auditRepository.delete(audit);
+        if (!audits.isEmpty()) {
+            audits.remove(0);
+        }
     }
 }
