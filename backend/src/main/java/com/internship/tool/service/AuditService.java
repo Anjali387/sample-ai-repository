@@ -30,7 +30,7 @@ public class AuditService {
         audit.setDescription(auditDTO.getDescription());
         audit.setStatus(auditDTO.getStatus());
 
-        // TIMESTAMPS ARE NOW HANDLED AUTOMATICALLY
+        // TIMESTAMPS HANDLED AUTOMATICALLY
 
         audits.add(audit);
 
@@ -75,8 +75,6 @@ public class AuditService {
             audit.setDescription(auditDTO.getDescription());
             audit.setStatus(auditDTO.getStatus());
 
-            // UPDATED TIME HANDLED AUTOMATICALLY
-
             logger.info("Audit updated successfully");
         }
 
@@ -94,5 +92,24 @@ public class AuditService {
 
             logger.info("Audit deleted successfully");
         }
+    }
+
+    // SEARCH AUDITS BY STATUS
+    public List<Audit> searchAuditsByStatus(String status) {
+
+        logger.info("Searching audits with status: " + status);
+
+        List<Audit> filteredAudits = new ArrayList<>();
+
+        for (Audit audit : audits) {
+
+            if (audit.getStatus() != null &&
+                    audit.getStatus().equalsIgnoreCase(status)) {
+
+                filteredAudits.add(audit);
+            }
+        }
+
+        return filteredAudits;
     }
 }

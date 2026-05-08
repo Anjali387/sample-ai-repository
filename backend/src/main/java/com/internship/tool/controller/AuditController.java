@@ -75,4 +75,15 @@ public class AuditController {
                 null
         );
     }
+
+    // SEARCH AUDITS BY STATUS
+    @GetMapping("/search")
+    public ApiResponse<List<Audit>> searchAuditsByStatus(
+            @RequestParam String status) {
+
+        return new ApiResponse<>(
+                "Filtered audits fetched successfully",
+                auditService.searchAuditsByStatus(status)
+        );
+    }
 }
