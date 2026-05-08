@@ -2,6 +2,7 @@ package com.internship.tool.controller;
 
 import com.internship.tool.dto.AuditDTO;
 import com.internship.tool.entity.Audit;
+import com.internship.tool.response.ApiResponse;
 import com.internship.tool.service.AuditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,39 +18,60 @@ public class AuditController {
 
     // CREATE AUDIT
     @PostMapping
-    public Audit createAudit(@RequestBody AuditDTO auditDTO) {
+    public ApiResponse<Audit> createAudit(
+            @RequestBody AuditDTO auditDTO) {
 
-        return auditService.createAudit(auditDTO);
+        Audit audit = auditService.createAudit(auditDTO);
+
+        return new ApiResponse<>(
+                "Audit created successfully",
+                audit
+        );
     }
 
     // GET ALL AUDITS
     @GetMapping
-    public List<Audit> getAllAudits() {
+    public ApiResponse<List<Audit>> getAllAudits() {
 
-        return auditService.getAllAudits();
+        return new ApiResponse<>(
+                "Audits fetched successfully",
+                auditService.getAllAudits()
+        );
     }
 
     // GET AUDIT BY ID
     @GetMapping("/{id}")
-    public Audit getAuditById(@PathVariable Long id) {
+    public ApiResponse<Audit> getAuditById(
+            @PathVariable Long id) {
 
-        return auditService.getAuditById(id);
+        return new ApiResponse<>(
+                "Audit fetched successfully",
+                auditService.getAuditById(id)
+        );
     }
 
     // UPDATE AUDIT
     @PutMapping("/{id}")
-    public Audit updateAudit(@PathVariable Long id,
-                             @RequestBody AuditDTO auditDTO) {
+    public ApiResponse<Audit> updateAudit(
+            @PathVariable Long id,
+            @RequestBody AuditDTO auditDTO) {
 
-        return auditService.updateAudit(id, auditDTO);
+        return new ApiResponse<>(
+                "Audit updated successfully",
+                auditService.updateAudit(id, auditDTO)
+        );
     }
 
     // DELETE AUDIT
     @DeleteMapping("/{id}")
-    public String deleteAudit(@PathVariable Long id) {
+    public ApiResponse<String> deleteAudit(
+            @PathVariable Long id) {
 
         auditService.deleteAudit(id);
 
-        return "Audit deleted successfully";
+        return new ApiResponse<>(
+                "Audit deleted successfully",
+                null
+        );
     }
 }
