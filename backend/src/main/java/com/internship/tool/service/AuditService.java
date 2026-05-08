@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +30,7 @@ public class AuditService {
         audit.setDescription(auditDTO.getDescription());
         audit.setStatus(auditDTO.getStatus());
 
-        audit.setCreatedAt(LocalDateTime.now());
-        audit.setUpdatedAt(LocalDateTime.now());
+        // TIMESTAMPS ARE NOW HANDLED AUTOMATICALLY
 
         audits.add(audit);
 
@@ -77,7 +75,7 @@ public class AuditService {
             audit.setDescription(auditDTO.getDescription());
             audit.setStatus(auditDTO.getStatus());
 
-            audit.setUpdatedAt(LocalDateTime.now());
+            // UPDATED TIME HANDLED AUTOMATICALLY
 
             logger.info("Audit updated successfully");
         }

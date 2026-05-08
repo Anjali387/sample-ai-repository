@@ -22,6 +22,23 @@ public class Audit {
 
     private LocalDateTime updatedAt;
 
+    // AUTO SET CREATED TIME
+    @PrePersist
+    protected void onCreate() {
+
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    // AUTO UPDATE TIME
+    @PreUpdate
+    protected void onUpdate() {
+
+        updatedAt = LocalDateTime.now();
+    }
+
+    // GETTERS & SETTERS
+
     public Long getId() {
         return id;
     }
