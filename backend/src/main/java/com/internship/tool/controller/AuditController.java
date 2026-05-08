@@ -4,6 +4,7 @@ import com.internship.tool.dto.AuditDTO;
 import com.internship.tool.entity.Audit;
 import com.internship.tool.response.ApiResponse;
 import com.internship.tool.service.AuditService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class AuditController {
     // CREATE AUDIT
     @PostMapping
     public ApiResponse<Audit> createAudit(
-            @RequestBody AuditDTO auditDTO) {
+            @Valid @RequestBody AuditDTO auditDTO) {
 
         Audit audit = auditService.createAudit(auditDTO);
 
@@ -54,7 +55,7 @@ public class AuditController {
     @PutMapping("/{id}")
     public ApiResponse<Audit> updateAudit(
             @PathVariable Long id,
-            @RequestBody AuditDTO auditDTO) {
+            @Valid @RequestBody AuditDTO auditDTO) {
 
         return new ApiResponse<>(
                 "Audit updated successfully",
