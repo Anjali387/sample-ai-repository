@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,8 +30,6 @@ public class AuditService {
         audit.setName(auditDTO.getName());
         audit.setDescription(auditDTO.getDescription());
         audit.setStatus(auditDTO.getStatus());
-
-        // TIMESTAMPS HANDLED AUTOMATICALLY
 
         audits.add(audit);
 
@@ -111,5 +110,36 @@ public class AuditService {
         }
 
         return filteredAudits;
+    }
+
+    // SORT AUDITS BY NAME
+    public List<Audit> sortAuditsByName() {
+
+        logger.info("Sorting audits by name");
+
+        List<Audit> sortedAudits = new ArrayList<>(audits);
+
+        sortedAudits.sort(
+                Comparator.comparing(Audit::getName)
+        );
+
+        return sortedAudits;
+    }
+
+    // PAGINATE AUDITS
+    public List<Audit> paginateAudits(int page, int size) {
+
+        logger.info("Paginating audits");
+
+        int start = page * size;
+
+        int end = Math.min(start + size, audits.size());
+
+        if (start >= audits.size()) {
+
+            return new ArrayList<>();
+        }
+
+        return audits.subList(start, end);
     }
 }

@@ -77,13 +77,35 @@ public class AuditController {
     }
 
     // SEARCH AUDITS BY STATUS
-    @GetMapping("/search")
+    @GetMapping("/search-by-status")
     public ApiResponse<List<Audit>> searchAuditsByStatus(
             @RequestParam String status) {
 
         return new ApiResponse<>(
                 "Filtered audits fetched successfully",
                 auditService.searchAuditsByStatus(status)
+        );
+    }
+
+    // SORT AUDITS BY NAME
+    @GetMapping("/sort-by-name")
+    public ApiResponse<List<Audit>> sortAuditsByName() {
+
+        return new ApiResponse<>(
+                "Sorted audits fetched successfully",
+                auditService.sortAuditsByName()
+        );
+    }
+
+    // PAGINATE AUDITS
+    @GetMapping("/paginate")
+    public ApiResponse<List<Audit>> paginateAudits(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        return new ApiResponse<>(
+                "Paginated audits fetched successfully",
+                auditService.paginateAudits(page, size)
         );
     }
 }
