@@ -1,6 +1,7 @@
 package com.internship.tool.service;
 
 import com.internship.tool.dto.AuditDTO;
+import com.internship.tool.dto.StatisticsDTO;
 import com.internship.tool.entity.Audit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,5 +125,55 @@ public class AuditService {
         );
 
         return sortedAudits;
+    }
+
+    // PAGINATE AUDITS
+    public List<Audit> paginateAudits(int page, int size) {
+
+        logger.info("Paginating audits");
+
+        int start = page * size;
+
+        int end = Math.min(start + size, audits.size());
+
+        if (start >= audits.size()) {
+
+            return new ArrayList<>();
+        }
+
+        return audits.subList(start, end);
+    }
+
+    // GET AUDIT STATISTICS
+    public StatisticsDTO getAuditStatistics() {
+
+        logger.info("Fetching audit statistics");
+
+        StatisticsDTO statistics = new StatisticsDTO();
+
+        statistics.setTotalAudits(audits.size());
+
+        int pending = 0;
+
+        int completed = 0;
+
+        for (Audit audit : audits) {
+
+            if ("Pending".equalsIgnoreCase(audit.getStatus())) {
+
+                pending++;
+            }
+
+            if ("Completed".equalsIgnoreCase(audit.getStatus())) {
+
+                completed++;
+            }
+        }
+
+        statistics.setPendingAudits(pending);
+
+        statistics.setCompletedAudits(completed);
+
+        return statistics;
     }
 }

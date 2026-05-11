@@ -1,6 +1,7 @@
 package com.internship.tool.controller;
 
 import com.internship.tool.dto.AuditDTO;
+import com.internship.tool.dto.StatisticsDTO;
 import com.internship.tool.entity.Audit;
 import com.internship.tool.response.ApiResponse;
 import com.internship.tool.service.AuditService;
@@ -94,6 +95,28 @@ public class AuditController {
         return new ApiResponse<>(
                 "Sorted audits fetched successfully",
                 auditService.sortAuditsByName()
+        );
+    }
+
+    // PAGINATE AUDITS
+    @GetMapping("/paginate")
+    public ApiResponse<List<Audit>> paginateAudits(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        return new ApiResponse<>(
+                "Paginated audits fetched successfully",
+                auditService.paginateAudits(page, size)
+        );
+    }
+
+    // GET AUDIT STATISTICS
+    @GetMapping("/statistics")
+    public ApiResponse<StatisticsDTO> getAuditStatistics() {
+
+        return new ApiResponse<>(
+                "Audit statistics fetched successfully",
+                auditService.getAuditStatistics()
         );
     }
 }
