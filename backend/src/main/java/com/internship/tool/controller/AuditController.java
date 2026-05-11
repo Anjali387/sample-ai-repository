@@ -96,16 +96,4 @@ public class AuditController {
                 auditService.sortAuditsByName()
         );
     }
-
-    // PAGINATE AUDITS
-    @GetMapping("/paginate")
-    public ApiResponse<List<Audit>> paginateAudits(
-            @RequestParam int page,
-            @RequestParam int size) {
-
-        return new ApiResponse<>(
-                "Paginated audits fetched successfully",
-                auditService.paginateAudits(page, size)
-        );
-    }
 }

@@ -125,21 +125,4 @@ public class AuditService {
 
         return sortedAudits;
     }
-
-    // PAGINATE AUDITS
-    public List<Audit> paginateAudits(int page, int size) {
-
-        logger.info("Paginating audits");
-
-        int start = page * size;
-
-        int end = Math.min(start + size, audits.size());
-
-        if (start >= audits.size()) {
-
-            return new ArrayList<>();
-        }
-
-        return audits.subList(start, end);
-    }
 }
