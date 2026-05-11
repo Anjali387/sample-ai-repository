@@ -176,4 +176,32 @@ public class AuditService {
 
         return statistics;
     }
+
+    // EXPORT AUDITS
+    public String exportAudits() {
+
+        logger.info("Exporting audits");
+
+        StringBuilder builder = new StringBuilder();
+
+        for (Audit audit : audits) {
+
+            builder.append("Audit Name: ")
+                    .append(audit.getName())
+                    .append("\n");
+
+            builder.append("Description: ")
+                    .append(audit.getDescription())
+                    .append("\n");
+
+            builder.append("Status: ")
+                    .append(audit.getStatus())
+                    .append("\n");
+
+            builder.append("-------------------------")
+                    .append("\n");
+        }
+
+        return builder.toString();
+    }
 }

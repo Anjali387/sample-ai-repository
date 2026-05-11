@@ -8,7 +8,6 @@ public class StatisticsDTO {
 
     private int completedAudits;
 
-    // GET TOTAL AUDITS
     public int getTotalAudits() {
         return totalAudits;
     }
@@ -17,7 +16,6 @@ public class StatisticsDTO {
         this.totalAudits = totalAudits;
     }
 
-    // GET PENDING AUDITS
     public int getPendingAudits() {
         return pendingAudits;
     }
@@ -26,7 +24,6 @@ public class StatisticsDTO {
         this.pendingAudits = pendingAudits;
     }
 
-    // GET COMPLETED AUDITS
     public int getCompletedAudits() {
         return completedAudits;
     }

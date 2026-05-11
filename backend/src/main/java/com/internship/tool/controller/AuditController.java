@@ -119,4 +119,14 @@ public class AuditController {
                 auditService.getAuditStatistics()
         );
     }
+
+    // EXPORT AUDITS
+    @GetMapping("/export")
+    public ApiResponse<String> exportAudits() {
+
+        return new ApiResponse<>(
+                "Audits exported successfully",
+                auditService.exportAudits()
+        );
+    }
 }
